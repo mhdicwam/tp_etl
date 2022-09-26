@@ -11,9 +11,7 @@ import java.util.Properties
 
 object KafkaConsumerService {
   val logger = Logger(KafkaProducerService.getClass)
-
   val topic = ConfService.TOPIC_OUT
-
   val props: Properties = new Properties()
   props.put("group.id", ConfService.GROUP_ID)
   props.put("bootstrap.servers", ConfService.BOOTSTRAP_SERVERS_CONFIG)
@@ -28,12 +26,12 @@ object KafkaConsumerService {
   props.put("enable.auto.commit", "false") // @TODO what are the risks to use this config ?
   props.put("auto.commit.interval.ms", "1000")
 
+
+      
   val consumer = new KafkaConsumer[String, String](props)
   val topicToRead = List(topic).asJava
-
   //@TODO we need to connect our consumer to our topic by **subscribing** it
   consumer.subscribe(topicToRead)
-
   def consume() = {
     try {
       for (i <- 0 to 20)  { // to avoid a while(true) loop
