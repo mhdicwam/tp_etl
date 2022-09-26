@@ -6,7 +6,6 @@ import org.apache.kafka.clients.producer._
 import org.sparkproject.jetty.util.ProcessorUtils
 
 import java.util.Properties
-import scala.Predef.Ensuring
 
 object KafkaProducerService {
   val logger = Logger(this.getClass)
