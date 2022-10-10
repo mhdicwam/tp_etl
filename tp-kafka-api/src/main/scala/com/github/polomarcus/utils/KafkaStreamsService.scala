@@ -28,9 +28,12 @@ object KafkaStreamsService {
     val builder: StreamsBuilder = new StreamsBuilder
     val textLinesStream: KStream[String, String] = builder.stream[String, String](ConfService.TOPIC_OUT)
 
-    //@TODO apply a filter here before counting words
+    val textLinesStreamWithFilter: KStream[String, String] = textLinesStream.filter { (key, txtValue) => 
+          txtValue contains "filter"
+    }
 
-    val wordCounts: KTable[String, Long] = textLinesStream
+
+    val wordCounts: KTable[String, Long] = textLinesStreamWithFilter
       .flatMapValues(textLine => { // Stateless
         val transformed = textLine.toLowerCase.split("\\W+")
 
@@ -57,7 +60,6 @@ object KafkaStreamsService {
     //@TODO display the joined stream using a foreach
     //logger.info(s"Key $key - value after joined $value")
 
-
     val topology = builder.build()
     val streams: KafkaStreams = new KafkaStreams(topology, props)
 
@@ -66,7 +68,7 @@ object KafkaStreamsService {
          |Stream started with this topology :
          |${topology.describe().toString}
          |----------------------------------------------------------------------------------------------------------------
-         |Waiting for messages (send them with Conduktor or run sbt "runMain com.github.polomarcus.main.MainKafkaProducer")
+         |Waiting for messages (send them with Conduktor or run sbt "runMain com.github.polomarcus.main.MainKafkaProducer")d
          |----------------------------------------------------------------------------------------------------------------
          |""".stripMargin
     )
