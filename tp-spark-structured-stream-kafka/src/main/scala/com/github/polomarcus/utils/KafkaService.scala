@@ -88,7 +88,12 @@ object KafkaService  {
   }
 
   //@TODO Read "README.md" file and write
-  //def writeToParquet(ds: Dataset[NewsKafka]) = {
-  //???
-  // }
+  def writeToParquet(ds: Dataset[NewsKafka]) = {
+    ds
+  .writeStream
+  .format("parquet")
+  .option("checkpointLocation", "path/to/checkpoint/dir")
+  .option("path", "path/to/destination/dir")
+  .start()
+  }
 }

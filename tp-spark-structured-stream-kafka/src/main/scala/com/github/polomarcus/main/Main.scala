@@ -28,12 +28,12 @@ object Main {
     KafkaService.debugStream(newsDatasets, false)
 
     //@TODO call here your function from KafkaService
-    ///KafkaService.writeToParquet(newsDatasets)
+    KafkaService.writeToParquet(newsDatasets)
 
     //@TODO Count the number news we have from different media (Tips: use the typed API, groupBy $"news.media" and count() )
-    //val counted = newsDatasets
-    //???
-    //KafkaService.debugStream(counted)
+    val counted = newsDatasets.groupBy(cols=$"news.media").count()
+
+    KafkaService.debugStream(counted)
 
     //Wait for all streams to finish
     spark.streams.awaitAnyTermination()

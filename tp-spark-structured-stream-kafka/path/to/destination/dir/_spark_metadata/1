@@ -1,0 +1,2 @@
+v1
+{"path":"file:///usr/tp/path/to/destination/dir/part-00000-05e258e2-f2c5-4343-aec5-814be9b88e34-c000.snappy.parquet","size":12562,"isDir":false,"modificationTime":1665413045000,"blockReplication":1,"blockSize":33554432,"action":"add"}
